@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Box, Button, Typography, IconButton } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -14,7 +14,6 @@ const carouselData = [
     title: "Happiness is turning your space into a garden...",
     subtitle: "Instant 30% Discount",
     buttonText: "Shop Now",
-    showButton: true,
   },
   {
     id: 2,
@@ -22,82 +21,69 @@ const carouselData = [
     title: "Bring Greenery to Your Life",
     subtitle: "Limited Time Offer",
     buttonText: "Explore",
-    showButton: true,
   },
   {
     id: 3,
     image: slider3,
-    showButton: false,
   },
   {
     id: 4,
     image: slider4,
-    showButton: false,
   },
 ];
 
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [showButton, setShowButton] = useState(true);
-
-  //Show button on banner for only first 2 slides
-  useEffect(() => {
-    if (currentIndex == 0 || currentIndex == 1) {
-        setShowButton(true);
-    }
-    else 
-        setShowButton(false);
-  }, [currentIndex]);
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => {
-      return prevIndex === carouselData.length - 1 ? 0 : prevIndex + 1;
-    });
+    setCurrentIndex((prevIndex) =>
+      prevIndex === carouselData.length - 1 ? 0 : prevIndex + 1
+    );
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => {
-      return prevIndex === 0 ? carouselData.length - 1 : prevIndex - 1;
-    });
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? carouselData.length - 1 : prevIndex - 1
+    );
   };
 
-  // Auto-play functionality -- can be used later if required
-  /*
-  useEffect(() => {
+  //Auto-Play functionality -- can be used later if required
+
+  /* useEffect(() => {
     const timer = setInterval(() => {
       handleNext();
-    }, 5000); // Change slide every 5 seconds
+    }, 5000); // Auto-play every 5 seconds
     return () => clearInterval(timer);
-  }, []);
-  */
+  }, []); */
 
   return (
-    <Box sx={{ position: "relative", overflow: "hidden", width: "100%" }}>
+    <Box sx={{ position: "relative", overflow: "hidden", width: "100%", height: "400px" }}>
       {/* Carousel Content */}
       {carouselData.map((key, index) => (
         <Box
           key={key.id}
           sx={{
-            display: currentIndex === index ? "flex" : "none",
-            alignItems: "center",
-            justifyContent: "space-between",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
             backgroundImage: `url(${key.image})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
-            height: "400px",
-            padding: "20px",
-            color: "#fff",
+            transition: "opacity 1s ease-in-out", // Smooth transition
+            opacity: currentIndex === index ? 1 : 0, // Show/hide logic
           }}
         >
-          <Box>
+          <Box sx={{ padding: "20px", color: "#fff", marginTop: "200px" }}>
             <Typography variant="h3" sx={{ fontWeight: "bold" }}>
               {key.title}
             </Typography>
             <Typography variant="h5" sx={{ marginTop: "10px" }}>
               {key.subtitle}
             </Typography>
-
-            {showButton && (
+            
+            {key.buttonText && (
               <Button
                 variant="contained"
                 sx={{
