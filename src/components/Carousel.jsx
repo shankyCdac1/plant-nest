@@ -6,6 +6,7 @@ import slider1 from "../assets/images/slider1.jpg";
 import slider2 from "../assets/images/slider2.jpg";
 import slider3 from "../assets/images/slider3.jpg";
 import slider4 from "../assets/images/slider4.jpg";
+import { Link } from "react-router-dom";
 
 const carouselData = [
   {
@@ -14,6 +15,7 @@ const carouselData = [
     title: "Happiness is turning your space into a garden...",
     subtitle: "Instant 30% Discount",
     buttonText: "Shop Now",
+    to: "shopNow"
   },
   {
     id: 2,
@@ -21,6 +23,7 @@ const carouselData = [
     title: "Bring Greenery to Your Life",
     subtitle: "Limited Time Offer",
     buttonText: "Explore",
+    to: "explore"
   },
   {
     id: 3,
@@ -73,9 +76,10 @@ const Carousel = () => {
             backgroundPosition: "center",
             transition: "opacity 1s ease-in-out", // Smooth transition
             opacity: currentIndex === index ? 1 : 0, // Show/hide logic
+            pointerEvents: currentIndex === index ? "auto" : "none",
           }}
         >
-          <Box sx={{ padding: "20px", color: "#fff", marginTop: "200px" }}>
+          <Box sx={{ padding: "20px", color: "#fff" }}>
             <Typography variant="h3" sx={{ fontWeight: "bold" }}>
               {key.title}
             </Typography>
@@ -86,9 +90,11 @@ const Carousel = () => {
             {key.buttonText && (
               <Button
                 variant="contained"
+                component={Link}
+                to={`/${key.to}`}
                 sx={{
                   marginTop: "20px",
-                  backgroundColor: "#ff5722",
+                  backgroundColor: "#ff5722", // #4caf50
                   color: "#fff",
                 }}
               >
